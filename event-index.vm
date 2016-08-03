@@ -1,0 +1,74 @@
+#set ($pageStructure = $_XPathTool.selectSingleNode($contentRoot, "/system-index-block"))
+#set ($callingPage = $_XPathTool.selectSingleNode($pageStructure, "calling-page/system-page"))
+#set ($callingSite = $_SerializerTool.serialize($callingPage.getChild("site"), true))
+#set ($events = $_XPathTool.selectNodes($pageStructure , "system-page"))
+<div class="remainder-box normal_page component">
+    #foreach ($event in $events)
+        #set ($innerStructure = "")
+        #set ($name = "")
+        #set ($venue ="")
+        #set ($showDate = "")
+        #set ($doorTime = "")
+        #set ($content = "")
+        #set ($photo = "")
+        #set ($ticketInfo = "")
+        #set ($ticketPrice = "")
+        #set ($custTicketInfo = "")  
+    
+        #set ($innerStructure = $_XPathTool.selectSingleNode($event , "system-data-structure"))
+        
+        #set ($name = $_SerializerTool.serialize($innerStructure.getChild("name"), true))
+        #set ($venue = $innerStructure.getChild("venue").value)
+        #set ($showDate = $_DateTool.getDate($innerStructure.getChild("showDate").value))
+        #set ($doorTime = $_DateTool.getDate($innerStructure.getChild("doorTime").value))
+        #set ($content = $_SerializerTool.serialize($innerStructure.getChild("content"), true))
+        #set ($photo = $_SerializerTool.serialize($innerStructure.getChild("photo").getChild("path"), true))
+        
+        #set ($ticketInfo = $_XPathTool.selectNodes($innerStructure, "ticketInfo"))
+        #set ($ticketPrice = $_XPathTool.selectSingleNode($ticketInfo, "ticketPrice").text)
+        #set ($custTicketInfo = $_SerializerTool.serialize($innerStructure.getChild("ticketInfo").getChild("advanced").getChild("custTicketInfo"), true))
+        
+        <div class="row-fluid event-row">
+            #if ($name != "")
+                <div class="row-fluid event-heading">
+                    <h2>$name</h2> 
+                </div>
+            #end    
+            <div class="row event-info">
+                #if ($photo != "/")    
+                    <div class="col-sm-4">
+                        <img class="event-image" src="[system-asset]${photo}[/system-asset]" alt="$name"/>
+                    </div>
+                #end    
+                <div class="col-sm-8">
+                    <p class="lead">
+                        <span class="venue-name"><strong>Venue: </strong>$venue</span> <br />
+                        <span class="show-time">
+                            #if ($showDate != "")
+                                <strong>Date: </strong>$_DateTool.format("EEEEEEEE, MMMMMMMMM d, yyyy", $showDate)<br />
+                                <strong>Show: </strong>$_DateTool.format("h:mm a", $showDate) 
+                                #if ($doorTime != "")    
+                                    <strong>Doors: </strong>$_DateTool.format("h:mm a", $doorTime) 
+                                #end    
+                            #end
+                        </span><br />
+                        <span class="ticket-info">
+                            <strong>Ticket Price: </strong>$ticketPrice <br />
+                            #if ($custTicketInfo != "<custTicketInfo />")
+                                <span class="lead">$custTicketInfo</span>
+                            #else
+                                <p class="lead">Tickets are available at all GrizTix locations including Worden&#39;s Market, Southgate Mall, The Source in the University Center, MSO Hub, and the Adams Center Box Office. Also available by calling 243-4051, toll-free at 1-888-MONTANA or online at <a href="http://www.umt.edu/griztix/">Griztix.com</a>.</p>
+                            #end    
+                        </span>
+                    </p>
+                </div>        
+            </div>
+            #if ($content != "")
+                <div class="row-fluid event-content">
+                    $content
+                </div>
+            #end
+        <hr />    
+        </div> ##event row    
+    #end
+</div>

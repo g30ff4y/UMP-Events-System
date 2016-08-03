@@ -1,0 +1,20 @@
+<system-data-structure>
+    <asset type="file" identifier="photo" label="Photo" help-text="Add square image here, should be the same dimensions as other images like 400x400 pixels."/>
+    <text identifier="name" label="Event Name" help-text="Name of event. Be careful with superfluous text; keep the event name limited ideally to 20-25 characters including spaces."/>
+    <text type="dropdown" identifier="venue" label="Venue" help-text="Pick or enter venue" allow-custom-values="true">
+        <dropdown-item value="Adams Center"/>
+        <dropdown-item value="Dennison Theatre"/>
+        <dropdown-item value="Stage 112"/>
+        <dropdown-item value="UC Ballroom"/>
+        <dropdown-item value="Wilma Theatre"/>
+    </text>
+    <text type="datetime" identifier="showDate" label="Show Date and Time" help-text="Enter the showdate and time from the date and time picker."/>
+    <text type="datetime" identifier="doorTime" label="Door Time" help-text="Enter the door time. You will still need to pick the correct date here."/>
+    <group identifier="ticketInfo" label="Tickets">
+        <text identifier="ticketPrice" label="Ticket Price(s)" help-text="Enter ticket prices here, may include letters, number and the dollar sign special character."/>
+        <group identifier="advanced" label="Advanced" collapsed="true">
+            <text wysiwyg="true" identifier="custTicketInfo" label="Custom Ticket Information" help-text="The basic UM Productions ticket information will automatically be displayed. Some events may have special details about how to purchase tickets. This information will need to be entered in this WYSIWYG Editor." wysiwyg-toolbar-remove="font formatting,font assignment,text formatting,insert image,embedded media,insert table,html view,"/>
+        </group>
+    </group>
+    <text wysiwyg="true" identifier="content" label="Event Content" help-text="Enter any additional information about the show, performer, etc. May also embed videos. Avoid using additional images to keep formatting clean." wysiwyg-toolbar-remove="insert image,"/>
+</system-data-structure>

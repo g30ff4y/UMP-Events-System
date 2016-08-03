@@ -6,11 +6,11 @@ Updated 8/2/2016 @g30ff4y
 [TOC]
 
 ##Overview
-Similar to the [Roster System](https://bitbucket.org/sfdadmin/sfd-documentation/wiki/SFD%20Roster%20System), the Events System is a system designed specifically for UM Productions to display various featured events happening on and off campus. The system uses two separate indexes to display four featured events (folder order) on the home page in place of the standard Ponderosa Tiles/Stories, in addition to an Events page that displays all events. Individual events are kept in a separate folder for easier maintenance and site navigation. 
+Similar to the Roster System, the Events System is a system designed specifically for UM Productions to display various featured events happening on and off campus. The system uses two separate indexes to display four featured events (folder order) on the home page in place of the standard Ponderosa Tiles/Stories, in addition to an Events page that displays all events. Individual events are kept in a separate folder for easier maintenance and site navigation. 
 
 ****Please note that the Event System requires quite a bit of setup, and while it would be possible to implement and adapt on another site, it is extremely ill-advised as maintenance could become problematic.****
 
-Due to high level of customization and complexity, this documentation will describe the components of the system and how to manage events, as opposed to initial implementation and setup (which is similar to the [Roster System](https://bitbucket.org/sfdadmin/sfd-documentation/wiki/SFD%20Roster%20System)).
+Due to high level of customization and complexity, this documentation will describe the components of the system and how to manage events, as opposed to initial implementation and setup (which is similar to the Roster System.
 
 ##Managing Events
 

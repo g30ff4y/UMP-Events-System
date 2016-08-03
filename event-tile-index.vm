@@ -1,0 +1,119 @@
+#set ($pageStructure = $_XPathTool.selectSingleNode($contentRoot, "/system-index-block"))
+#set ($callingPage = $_XPathTool.selectSingleNode($pageStructure, "calling-page/system-page"))
+#set ($callingSite = $_SerializerTool.serialize($callingPage.getChild("site"), true))
+#set ($events = $_XPathTool.selectNodes($pageStructure , "system-page"))
+
+#foreach ($event in $events)
+    #set ($count = 0)
+    
+    #if ($foreach.count == 1)
+        #set ($colCount = 'col-sm-12')
+    #end
+      
+    #if ($foreach.count == 2)
+        #set ($colCount = 'col-sm-6')
+    #end
+      
+    #if ($foreach.count == 3)
+        #set ($colCount = 'col-sm-4')
+    #end
+      
+    #if ($foreach.count == 4)
+        #set ($colCount = 'col-sm-3')
+    #end 
+#end
+<div class="row-fluid">##row for items
+    <div class="row-fluid featured_tiles">
+        <h2 class="access_hidden">Featured Content</h2>
+        <div class="row-fluid tile_row dark">
+            #foreach ($event in $events)
+                #set ($innerStructure = "")
+                #set ($name = "")
+                #set ($venue ="")
+                #set ($showDate = "")
+                #set ($doorTime = "")
+                #set ($content = "")
+                #set ($photo = "")
+                #set ($ticketInfo = "")
+                #set ($ticketPrice = "")
+                #set ($custTicketInfo = "")
+                #set ($pageLink ="")
+            
+                #set ($innerStructure = $_XPathTool.selectSingleNode($event , "system-data-structure"))
+                
+                #set ($name = $_SerializerTool.serialize($innerStructure.getChild("name"), true))
+                #set ($content = $innerStructure.getChild("content").value)
+                #set ($photo = $_SerializerTool.serialize($innerStructure.getChild("photo").getChild("path"), true))
+                #set ($venue = $innerStructure.getChild("venue").value)
+                #set ($showDate = $_DateTool.getDate($innerStructure.getChild("showDate").value))
+                #set ($doorTime = $_DateTool.getDate($innerStructure.getChild("doorTime").value))
+                #set ($ticketInfo = $_XPathTool.selectNodes($innerStructure, "ticketInfo"))
+                #set ($ticketPrice = $_XPathTool.selectSingleNode($ticketInfo, "ticketPrice").text)
+                #set ($custTicketInfo = $_SerializerTool.serialize($innerStructure.getChild("ticketInfo").getChild("advanced").getChild("custTicketInfo"), true))
+                
+                #set ($pageLink = $_XPathTool.selectSingleNode($event, "link").text)
+                    
+		            <div class="site_tile large_image_text $colCount">
+                        <div class="itemContent tile-inner light_shadow">
+                            <div class="row">
+                                <div class="col-sm-12 tile_image frame">
+                                    #if ($photo != "/")
+                                        #if ($altText != "")
+                                            <img alt="$altText" src="[system-asset]${photo}[/system-asset]" class ="itemImage"/>
+                                        #end
+                                    #end
+                                </div> ##tile_image
+                            </div> ##row-fluid
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="itemDetails tile_content row">
+                                        #if ($name != "")
+                                            <h3>$name</h3>
+                                        #end
+                                        #if ($venue != "" || $showDate != "" || $doorTime != "")
+                    	                    <p class="event-times">
+                    		                    <span class="venue-name"><strong>Venue: </strong>$venue</span> <br />
+                    		                    <span class="show-time">
+                    		                        #if ($showDate != "")
+                    		                            <strong>Date: </strong>$_DateTool.format("EEEEEEEE, MMMMMMMMM d, yyyy", $showDate)<br />
+                    		                            <strong>Show: </strong>$_DateTool.format("h:mm a", $showDate) 
+                    		                            #if ($doorTime != "")    
+                    		                                <strong>Doors: </strong>$_DateTool.format("h:mm a", $doorTime) 
+                    		                            #end    
+                    		                        #end
+                    		                    </span>
+                    	                	</p>
+                    	                #end    
+                                        #if ($content != "")
+                    	                    <p class="event-description" style="max-height:125px;">
+                                                ${_DisplayTool.truncate($content,150,"...",true)}
+                                            </p>
+                                    </div> ##item details    
+                                        <div class="featured_site_links read-more-wrap row">
+                                            <div class="featured_link read-more-btn">
+                                                <a href="$pageLink">
+                                                    <span class="grad_button featurebutton_maroon">
+                                                        <span class="feature_title">
+                                                            Read More <span class="access_hidden">About $name</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                	#end
+                                </div> ##span12
+                            </div> ##row-fluid
+                        </div>##item             
+                    </div>##column   
+            #end ##event
+        </div> ## tile row
+    </div> ## featured tiles
+</div>##item row
+
+<script type="text/javascript">
+    require(["jquery", "height_equalizer"],function(jQuery,height_equalizer){
+        jQuery(document).ready(function($){
+            height_equalizer.equalize(".itemContent");
+        });
+    });
+</script>
